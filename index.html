@@ -528,6 +528,7 @@
 
           var upVoteButtons = document.getElementsByName("upV")
           for(let i = 0; i < upVoteButtons.length; i++){
+            upVoteButtons[i].classList.remove("hidden")
             if(votes[upVoteButtons[i].id.substring(1)] === 1){
               for (const child of upVoteButtons[i].children) {
                 child.setAttribute("stroke", "orange")
@@ -576,6 +577,7 @@
           }
           var downVoteButtons = document.getElementsByName("downV")
           for(let i = 0; i < downVoteButtons.length; i++){
+            downVoteButtons[i].classList.remove("hidden")
             if(votes[downVoteButtons[i].id.substring(1)] === -1){
               for (const child of downVoteButtons[i].children) {
                 child.setAttribute("stroke", "orange")
@@ -799,6 +801,15 @@
           if(mainPage.classList.contains("hidden")){
             mainPage.classList.remove("hidden")
             aboutPage.classList.add("hidden")
+          }
+          var downVoteButtons = document.getElementsByName("downV")
+          for(var i = 0; i < downVoteButtons.length; i++){
+            downVoteButtons[i].classList.add("hidden")
+          }
+          var upVoteButtons = document.getElementsByName("upV")
+          console.log("ups = ", upVoteButtons)
+          for(var i = 0; i < upVoteButtons.length; i++){
+            upVoteButtons[i].classList.add("hidden")
           }
           var submitButton = document.querySelector("#create")
           submitButton.innerText = "Log in to submit a food event!"
@@ -1941,6 +1952,13 @@
         upV.type = "button"
         upV.className = "bg-white rounded-md p-2 inline-flex items-center justify-right text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
 
+        if(!userId){
+          upV.classList.add("hidden")
+        }
+        else{
+          upV.classList.remove("hidden")
+        }
+
         var upImg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         upImg.setAttribute("class", "h-2 w-2")
         upImg.setAttribute("fill",  "none")
@@ -1966,6 +1984,13 @@
         downV.name = "downV"
         downV.dataset.count = count
         downV.className = "bg-white rounded-md p-2 inline-flex items-center justify-right text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+
+        if(!userId){
+          downV.classList.add("hidden")
+        }
+        else{
+          downV.classList.remove("hidden")
+        }
 
         var downImg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         downImg.setAttribute("class", "h-2 w-2")
