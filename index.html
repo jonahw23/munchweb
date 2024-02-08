@@ -213,8 +213,13 @@
 
     <div id="mainPage" class="w-full flex content-center justify-evenly lg:flex-row flex-col mt-8">
       <div class="bg-white lg:w-1/2 h-full lg:mr-5 lg:ml-5 shadow-md rounded px-8 pt-6 py-8 mb-4">
-        <h1 class="block text-grey-800 text-md font-bold mb-2">Submit a New Food Event!</h1>
-        <div class="flex" style="flex-direction:column">
+        <div class="flex justify-between">
+          <h1 class="block text-grey-800 text-md font-bold mb-2">Submit a New Food Event!</h1>
+          <button id="submitEventButton" class="lg:hidden flex justify-center">
+            <img width="30%" height="30%" src="https://i.imgur.com/L9QuTFc.png">
+          </button>
+        </div>
+        <div id="submitOptions" class="flex" style="flex-direction:column">
           <! -- <input class="shadow appearance-none border rounded w-full mt-2 py-2 px-3 text-grey-800 leading-tight focus:outline-none focus:shadow-outline" type="text" name="second" placeholder="A new todo">
           
             <select id="eventType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -1729,6 +1734,18 @@
         dropdown.classList.add("hidden")
       }
     }
+
+    var toggleSubmitEvent = function(){
+      var submitPage = document.querySelector("#submitOptions")
+      if(submitPage.classList.contains("hidden")){
+        submitPage.classList.remove("hidden")
+      }
+      else{
+        submitPage.classList.add("hidden")
+      }
+    }
+    document.querySelector("#submitEventButton").addEventListener("click", toggleSubmitEvent)
+
 
     var checkOutside = function(){
       var checkedBox = document.querySelector("#outsideLocation")
