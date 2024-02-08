@@ -720,11 +720,17 @@
 
           var userNameInput = document.querySelector("#userNameInput")
 
+          function random(mn, mx) { // random function for usernames (from geeksforgeeks.org/)
+            return Math.floor(Math.random() * (mx - mn) + mn);
+          }
+
           if(currentUser.username){
             userNameInput.value = currentUser.username
           }
           else{
-            userNameInput.value = "User1"
+            const colors = ["Amber", "Lilac", "Cerulean", "Fuchsia", "Red", "Blue", "Green", "Purple", "Orange", "Pink", "Indigo", "Violet", "Silver", "Golden"]
+            const animals = ["Badger", "Peacock", "Llama", "Tortoise", "Gorilla", "Antelope", "Giraffe", "Ostrich", "Lion", "Tiger", "Lizard", "Coyote", "Hedgehog", "Rhino", "Lemur", "Salamander", "Shark", "Butterfly"]
+            userNameInput.value = colors[random(0, colors.length)] + animals[random(0, animals.length)]
             currentUser.username = userNameInput.value
             set(ref(database, 'users/' + user.uid), currentUser);
           }
