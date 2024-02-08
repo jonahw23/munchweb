@@ -33,8 +33,20 @@
     .badgeupvote1000{
       filter:  brightness(87%) contrast(130%) hue-rotate(360deg) saturate(90%) sepia(10%);
     }
+    .badgetrend5{
+      filter:  brightness(85%) contrast(126%) hue-rotate(341deg) saturate(121%) sepia(31%);
+    }
+    .badgetrend10{
+      filter:  brightness(85%) contrast(126%) hue-rotate(161deg) saturate(53%) sepia(26%);
+    }
     .badgetrend100{
       filter:  brightness(109%) contrast(86%) saturate(165%);
+    }
+    .badgegive10{
+      filter:  brightness(85%) contrast(126%) hue-rotate(341deg) saturate(121%) sepia(31%);
+    }
+    .badgegive100{
+      filter:  brightness(85%) contrast(126%) hue-rotate(161deg) saturate(53%) sepia(26%);
     }
     .badgegive500{
       filter:  brightness(109%) contrast(86%) saturate(165%);
@@ -42,6 +54,9 @@
     .locked{
       filter: grayscale(100%) blur(5px);
     }
+    .fillers {
+      height:0; /*Important! for the divs to collapse should they fall in a new row*/
+  }
     </style>
 
     <!-- Map style pieces -->
@@ -152,7 +167,7 @@
       </div>
       <div id="avatar" class="hidden">
         <img id="avatarImg" class="avatar w-10 h-10 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" referrerpolicy="no-referrer" alt="Rounded avatar">
-        <div id="userDropdown" class="userDropdown hidden absolute right-0 mt-3 mr-3 w-auto overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-gray-900/5">
+        <div id="userDropdown" style="z-index:10" class="userDropdown hidden absolute right-0 mt-3 mr-3 w-auto overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-gray-900/5">
             <div class="px-4 py-1 mt-1 text-sm text-gray-900 dark:text-white">
               <div id="username">User logged in</div>
               <div id="email" class="font-medium truncate">name@email.com</div>
@@ -186,26 +201,66 @@
           </div>
         </div>
 
-        <div class="flex flex-row flex-wrap items-center justify-around">
-          <div class="w-5/12 md:w-1/4 lg:w-1/6">
+        <div class="badgeblock flex flex-row flex-wrap justify-around">
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
             <img id="badgeupvote10" class="" src="https://i.imgur.com/k13ZTWR.png" referrerpolicy="no-referrer" alt="Badge">
             <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Noted</b>Receive 10 upvotes!</div>
           </div>
-          <div class="w-5/12 md:w-1/4 lg:w-1/6">
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
             <img id="badgeupvote100" class="" src="https://i.imgur.com/k13ZTWR.png" referrerpolicy="no-referrer" alt="Badge">
             <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Acclaimed</b>Receive 100 upvotes!</div>
           </div>
-          <div class="w-5/12 md:w-1/4 lg:w-1/6">
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
             <img id="badgeupvote1000" class="" src="https://i.imgur.com/k13ZTWR.png" referrerpolicy="no-referrer" alt="Badge">
             <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Renowned</b>Receive 1000 upvotes!</div>
           </div>
-          <div class="w-5/12 md:w-1/4 lg:w-1/6">
-            <img id="badgetrend100" class="" src="https://i.imgur.com/7PowxEi.png" referrerpolicy="no-referrer" alt="Badge">
-            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Trending</b>Get 100 upvotes on a post!</div>
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            <img id="badgetrend5" class="" src="https://i.imgur.com/7PowxEi.png" referrerpolicy="no-referrer" alt="Badge">
+            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Popular</b>Get 5 upvotes on a post!</div>
           </div>
-          <div class="w-5/12 md:w-1/4 lg:w-1/6">
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            <img id="badgetrend10" class="" src="https://i.imgur.com/7PowxEi.png" referrerpolicy="no-referrer" alt="Badge">
+            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Trending</b>Get 10 upvotes on a post!</div>
+          </div>
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            <img id="badgetrend100" class="" src="https://i.imgur.com/7PowxEi.png" referrerpolicy="no-referrer" alt="Badge">
+            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Luminary</b>Get 100 upvotes on a post!</div>
+          </div>
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            <img id="badgegive10" class="" src="https://i.imgur.com/KJYCifv.png" referrerpolicy="no-referrer" alt="Badge">
+            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Supporter</b>Give 10 votes.</div>
+          </div>
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            <img id="badgegive100" class="" src="https://i.imgur.com/KJYCifv.png" referrerpolicy="no-referrer" alt="Badge">
+            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Patron</b>Give 100 votes.</div>
+          </div>
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
             <img id="badgegive500" class="" src="https://i.imgur.com/KJYCifv.png" referrerpolicy="no-referrer" alt="Badge">
             <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Connoisseur</b>Give 500 votes.</div>
+          </div>
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            <img id="badgesecret1" class="locked" src="https://i.imgur.com/uGzC9Hq.png" referrerpolicy="no-referrer" alt="Badge">
+            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Secret Badge</b>???</div>
+          </div>
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            <img id="badgesecret2" class="locked" src="https://i.imgur.com/uGzC9Hq.png" referrerpolicy="no-referrer" alt="Badge">
+            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Secret Badge</b>???</div>
+          </div>
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            <img id="badgesecret3" class="locked" src="https://i.imgur.com/uGzC9Hq.png" referrerpolicy="no-referrer" alt="Badge">
+            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Secret Badge</b>???</div>
+          </div>
+          <div class="fillers w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            
+          </div>
+          <div class="fillers w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            
+          </div>
+          <div class="fillers w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            
+          </div>
+          <div class="fillers w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            
           </div>
         </div>
       </div>
@@ -238,7 +293,7 @@
             <div class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full mt-2 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <div class="ms-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Location Details</div>  
             <div class="ms-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-wrap">
-                <input id="locationInput" placeholder=" Location" class="hidden bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto ml-1 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                <input id="locationInput" placeholder=" Location" maxlength="50" class="hidden bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto ml-1 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
                 <input id="roomNumInput" placeholder=" Room Number" max="999999999999999" type="number" min="0" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto ml-1 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
               </div>
               <div class="flex items-center mb-4">
@@ -270,9 +325,9 @@
       </div>
 
       <div class="h-full lg:w-1/2 lg:mr-5 bg-white shadow-md rounded px-8 pt-6 py-8 mb-4">
-        <h1 class="block text-grey-800 text-md font-bold mb-2">Current Food Events</h1>
+        <h1 id="currentFoodEvents" class="block text-grey-800 text-md font-bold mb-2">Current Food Events</h1>
         <div class="mt-4" id="todos"></div>
-        <div id="map" class="mt-4"></div>
+        <div id="map" style="z-index: 0" class="mt-4"></div>
       </div>
 
     </div>
@@ -368,12 +423,20 @@
             if(newTodos.length > 1){
               window.todos = newTodos.filter(function(e){return e}).slice(1); 
               console.log("windowTodos:", window.todos)
+              if(window.todos.length == 0){
+                document.querySelector("#currentFoodEvents").innerHTML = "No Current Food Events ☹️" 
+              }
+              else{
+                document.querySelector("#currentFoodEvents").innerHTML = "Current Food Events" 
+              }
               
               populateTodos()
               startUpWithCurrent()
               loadPins()
             }
             else{
+              console.log(document.querySelector("#currentFoodEvents"))
+              document.querySelector("#currentFoodEvents").innerHTML = "No Current Food Events ☹️" 
               window.todos = []
             }
             console.log("Window todos :", window.todos)
@@ -432,6 +495,18 @@
             const userToAddVote = snapshot.val();
             const currentVotes = userToAddVote.votesrecieved
             userToAddVote.votesrecieved = currentVotes + vote_amount
+            if(!userToAddVote.userbadges){
+              userToAddVote.userbadges = {}
+            }
+            if(vote_amount >= 5){
+              userToAddVote.userbadges["badgetrend5"] = true
+            }
+            if(vote_amount >= 10){
+              userToAddVote.userbadges["badgetrend10"] = true
+            }
+            if(vote_amount >= 100){
+              userToAddVote.userbadges["badgetrend100"] = true
+            }
             console.log("Adding", vote_amount, "to user", userToAddVote)
             set(ref(database, 'users/' + uid), userToAddVote); // this one is different from the normal setting
           }
@@ -701,9 +776,21 @@
               }
             }
             for(var t = 0; t < todo_set.length; t++){
+              if(todo_set[t] && todo_set[t].user_submitted === user.uid && todo_set[t].upvotes >= 5){
+                currentUser.userbadges["badgetrend5"] = true
+              }
+              if(todo_set[t] && todo_set[t].user_submitted === user.uid && todo_set[t].upvotes >= 10){
+                currentUser.userbadges["badgetrend10"] = true
+              }
               if(todo_set[t] && todo_set[t].user_submitted === user.uid && todo_set[t].upvotes >= 100){
                 currentUser.userbadges["badgetrend100"] = true
               }
+            }
+            if(getUserVotesGiven() >= 10){
+              currentUser.userbadges["badgegive10"] = true
+            }
+            if(getUserVotesGiven() >= 100){
+              currentUser.userbadges["badgegive100"] = true
             }
             if(getUserVotesGiven() >= 500){
               currentUser.userbadges["badgegive500"] = true
@@ -720,7 +807,7 @@
           }
 
           getAllBadges = function(){
-            return ["badgeupvote10", "badgeupvote100", "badgeupvote1000", "badgetrend100", "badgegive500"] // should be list of all badges (corresponding styles and ID for img)
+            return ["badgeupvote10", "badgeupvote100", "badgeupvote1000", "badgetrend5", "badgetrend10", "badgetrend100", "badgegive10", "badgegive100", "badgegive500"] // should be list of all badges (corresponding styles and ID for img)
           }
 
           var userNameInput = document.querySelector("#userNameInput")
@@ -1485,6 +1572,9 @@
       for(let i = 0; i < todos.length; i++){
 
         if(!(todos[i])){
+          continue
+        }
+        if(!(todos[i].location in coords)){
           continue
         }
 
