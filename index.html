@@ -2204,7 +2204,7 @@
       var isOutside = document.querySelector("#outsideLocation")
       var hours = document.querySelector("#hourInput")
 
-      var hourContent = hours.value !== null && hours.value !== "" ? hours.value : 1
+      var hourContent = hours.value !== null && hours.value !== "" ? Math.min(hours.value, 99) : 1
 
       const d = new Date();
       let time = d.getTime();
