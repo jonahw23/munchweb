@@ -1603,7 +1603,6 @@
     // End map code
 
     var updateTodos = function() {
-      fetch("/", { method: 'PUT', body: JSON.stringify({ todos: window.todos }) })
       populateTodos()
       startUpWithCurrent()
     }
