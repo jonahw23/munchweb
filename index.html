@@ -328,6 +328,7 @@
         <h1 id="currentFoodEvents" class="block text-grey-800 text-md font-bold mb-2">Current Food Events</h1>
         <div class="mt-4" id="todos"></div>
         <div id="map" style="z-index: 0" class="mt-4"></div>
+        <div class="text-xs text-center mt-2"><i>If your location isn't visible on the map, make sure you have location services enabled.</i></div>
       </div>
 
     </div>
@@ -422,7 +423,7 @@
             const newTodos = snapshot.val();
             if(newTodos.length > 1){
               window.todos = newTodos.filter(function(e){return e}).slice(1); 
-              console.log("windowTodos:", window.todos)
+              //console.log("windowTodos:", window.todos)
               if(window.todos.length == 0){
                 document.querySelector("#currentFoodEvents").innerHTML = "No Current Food Events ☹️" 
               }
@@ -435,15 +436,14 @@
               loadPins()
             }
             else{
-              console.log(document.querySelector("#currentFoodEvents"))
               document.querySelector("#currentFoodEvents").innerHTML = "No Current Food Events ☹️" 
               window.todos = []
             }
-            console.log("Window todos :", window.todos)
+            //console.log("Window todos :", window.todos)
           }
           else{
             window.todos = []
-            console.log("No todos found") // should not ever occur
+            //console.log("No todos found") // should not ever occur
           }
         }, // end snapshot logic
         error => {
@@ -456,7 +456,7 @@
       const setFirebaseTodos = function(newTodos){
         const database = getDatabase(firebaseApp);
         var newTodos = [{"Name":"Empty"}].concat(newTodos)
-        console.log("Setting", newTodos)
+        //console.log("Setting", newTodos)
         set(ref(database, 'todos'), newTodos); // push to todos
       }
 
@@ -475,7 +475,7 @@
             }
           }
           else{ // first time voting
-            console.log("No todos found")
+            //console.log("No todos found")
           }
         }, // end snapshot logic
         {
@@ -507,8 +507,9 @@
             if(vote_amount >= 100){
               userToAddVote.userbadges["badgetrend100"] = true
             }
-            console.log("Adding", vote_amount, "to user", userToAddVote)
-            set(ref(database, 'users/' + uid), userToAddVote); // this one is different from the normal setting
+            //console.log("Adding", vote_amount, "to user", userToAddVote)
+            set(ref(database, 'users/' + uid + "/votesrecieved"), userToAddVote.votesrecieved); // this one is different from the normal setting
+            set(ref(database, 'users/' + uid + "/userbadges"), userToAddVote.userbadges); // this one is different from the normal setting
           }
           else{
             console.log("No user with matching ID") // should not ever occur
@@ -547,7 +548,7 @@
             currentUser = snapshot.val();
 
             userNum = currentUser.usernum
-            console.log("Running start with current user", currentUser)
+            //console.log("Running start with current user", currentUser)
             if(currentUser.uservotes){
               for (const [key, value] of Object.entries(currentUser.uservotes)) { // set votes equal to the users votes
                 if(key in votes){
@@ -879,8 +880,8 @@
           signOut(auth)
         }
 
-        console.log('Logged in as ' + user.email );
-        console.log("User:", user)
+        //console.log('Logged in as ' + user.email );
+        //console.log("User:", user)
       }
     
       onAuthStateChanged(auth, user => {
@@ -905,7 +906,6 @@
             downVoteButtons[i].classList.add("hidden")
           }
           var upVoteButtons = document.getElementsByName("upV")
-          console.log("ups = ", upVoteButtons)
           for(var i = 0; i < upVoteButtons.length; i++){
             upVoteButtons[i].classList.add("hidden")
           }
@@ -920,11 +920,6 @@
     
   const buildings = [
     "Not Listed",
-    "905 Annex V",
-    "906 Annex VI",
-    "907 Annex VII",
-    "908 Annex VIII",
-    "909 Annex IX",
     "AUG August Center",
     "BHA Frances Baker Hall A",
     "BHB Frances Baker Hall B",
@@ -939,7 +934,7 @@
     "CHC Eugene Colby Hall E",
     "CHD Eugene Colby Hall D",
     "CHE Eugene Colby Hall E",
-    "CHF Eugene Colby Hall (F)",
+    "CHF Eugene Colby Hall F",
     "CLK George H. Clark Gymnasium",
     "COL Munsell Color Science Laboratory",
     "CPC Campus Center",
@@ -950,11 +945,10 @@
     "EAS George Eastman Hall",
     "ENG Engineering Hall",
     "ENT Engineering Technology Hall",
-    "FHA Helen Fish Hall (A)",
+    "FHA Helen Fish Hall A",
     "FHB Helen Fish Hall B",
     "FHC Helen Fish Hall C",
     "FMS Facilities Management Services",
-    "FNK 40 Franklin Street",
     "GAN Frank E. Gannett Hall",
     "GHA Greek House A - Zeta Tau Alpha",
     "GHB Greek House B - Delta Phi Epsilon",
@@ -968,30 +962,22 @@
     "GOR Gordon Field House & Activities Center",
     "GOS Thomas Gosnell Hall",
     "Greek Lawn",
-    "GVC Global Village Way C",
-    "GVD Global Village Way D",
-    "GVE Global Village Way E",
     "GVP Global Village Plaza",
     "GWH Grace Watson Hall",
     "HAC Hale-Andrews Student Life Center",
     "HLC Hugh L. Carey Hall",
-    "ICC RIT Inn & Conference Center",
     "Infinity Quad",
     "INS Institute Hall",
-    "JEF 175 Jefferson Road",
     "KGH Kate Gleason Hall",
     "LAC Laboratory for Applied Computing",
     "LBJ Lyndon Baines Johnson Hall",
     "LBR Liberal Arts Hall",
-    "LEL Leenhouts Lodge at the Tait Preserve",
-    "LH Liberty Hill",
     "LOB Joseph M. Lobozzo Alumni House",
     "LOW Max Lowenthal Hall",
     "MEH Mark Ellingson Hall",
     "MON Monroe Hall",
     "MPT Music Performance Theater",
     "MSS MAGIC Spell Studios",
-    "OBS Observatory House",
     "ORN Orange Hall",
     "PGA Perkins Green Apartments",
     "POL Gene Polisseni Center",
@@ -1014,22 +1000,14 @@
     "SLA Louise Slaughter Hall",
     "SMT Schmitt Interfaith Center",
     "SUS Sustainability Institute Hall",
-    "TPD 125 Tech Park Drive",
-    "UCS University Commons Suites",
     "UNI University Gallery",
     "USC University Services Center",
     "VIG Vignelli Center for Design Studies",
-    "VRB Vehicle Repair Building",
     "WAL Wallace Library",
     "WEL Welcome Center",]
 
     const coords = {
       "Not Listed": [0,0],
-      "905 Annex V": [0,0],
-      "906 Annex VI": [0,0],
-      "907 Annex VII": [0,0],
-      "908 Annex VIII": [0,0],
-      "909 Annex IX": [0,0],
       "AUG August Center": [43.08417929383888, -77.67212814056265],
       "BHA Frances Baker Hall A": [43.08408914897436, -77.66943073414521],
       "BHB Frances Baker Hall B": [43.084081447762095, -77.66866098416261],
@@ -1039,12 +1017,12 @@
       "CAR Chester F. Carlson Center for Imaging Science": [43.085904342527634, -77.67767046096698],
       "CBT Center for Bioscience Education & Technology": [43.08561689994638, -77.6785541406307],
       "CGH Carlton Gibson Hall": [43.08572044084291, -77.6677090445869],
-      "CHA Eugene Colby Hall A": [0,0],
-      "CHB Eugene Colby Hall B": [0,0],
-      "CHC Eugene Colby Hall E": [0,0],
-      "CHD Eugene Colby Hall D": [0,0],
-      "CHE Eugene Colby Hall E": [0,0],
-      "CHF Eugene Colby Hall (F)": [0,0],
+      "CHA Eugene Colby Hall A": [43.08462637586163, -77.66890825097352],
+      "CHB Eugene Colby Hall B": [43.08462637586163, -77.66890825097352],
+      "CHC Eugene Colby Hall E": [43.08473049997721, -77.66845476213884],
+      "CHD Eugene Colby Hall D": [43.08473049997721, -77.66845476213884],
+      "CHE Eugene Colby Hall E": [43.08473049997721, -77.66845476213884],
+      "CHF Eugene Colby Hall F": [43.08464014005165, -77.6679828693356],
       "CLK George H. Clark Gymnasium": [43.08458099105695, -77.67390470060036],
       "COL Munsell Color Science Laboratory": [43.08241149888393, -77.67891166721117],
       "CPC Campus Center": [43.0841147612565, -77.67386807083561],
@@ -1055,52 +1033,44 @@
       "EAS George Eastman Hall": [43.08472979548091, -77.67533437279671],
       "ENG Engineering Hall": [43.08444322336611, -77.67902591177617],
       "ENT Engineering Technology Hall": [43.0850318764658, -77.68032773318922],
-      "FHA Helen Fish Hall (A)": [0,0],
-      "FHB Helen Fish Hall B": [0,0],
-      "FHC Helen Fish Hall C": [0,0],
-      "FMS Facilities Management Services": [0,0],
-      "FNK 40 Franklin Street": [0,0],
+      "FHA Helen Fish Hall A": [43.08517606852648, -77.66897952254286],
+      "FHB Helen Fish Hall B": [43.085192835607195, -77.66831230731326],
+      "FHC Helen Fish Hall C": [43.085192835607195, -77.66831230731326],
+      "FMS Facilities Management Services": [43.08383013094806, -77.66068180460275],
+      "Fountain Park": [43.08319394119752, -77.67902958437774],
       "GAN Frank E. Gannett Hall": [43.08527049805491, -77.67629104238274],
-      "Greek Lawn": [0,0],
-      "GHA Greek House A - Zeta Tau Alpha": [0,0],
-      "GHB Greek House B - Delta Phi Epsilon": [0,0],
-      "GHC Greek House C - Alpha Sigma Alpha": [0,0],
-      "GHD Greek House D - Phi Kappa Psi": [0,0],
-      "GHE Greek House E - Alpha Xi Delta": [0,0],
-      "GHF Greek House F - Pi Kappa Phi": [0,0],
+      "Greek Lawn": [43.08504337273751, -77.67018280842278],
+      "GHA Greek House A - Zeta Tau Alpha": [43.08258276030277, -77.68274057950035],
+      "GHB Greek House B - Delta Phi Epsilon": [43.08258276030277, -77.68217691064012],
+      "GHC Greek House C - Alpha Sigma Alpha": [43.08257811721818, -77.68160476555644],
+      "GHD Greek House D - Phi Kappa Psi": [43.08220821701558, -77.6817234326849],
+      "GHE Greek House E - Alpha Xi Delta": [43.0821788106275, -77.6822023393105],
+      "GHF Greek House F - Pi Kappa Phi": [43.082154047342364, -77.68266853160092],
       "GLE James E. Gleason Hall": [43.08423270156981, -77.6779138669747],
-      "GOB Gosnell Boathouse": [0,0],
+      "GOB Gosnell Boathouse": [43.082185001447215, -77.68173402796424],
       "GOL Golisano Hall": [43.08450625401825, -77.67992385934494],
       "GOR Gordon Field House & Activities Center": [43.085082087108894, -77.67226754316222],
       "GOS Thomas Gosnell Hall": [43.083661293930064, -77.6772606873489],
-      "GVC Global Village Way C": [0,0],
-      "GVD Global Village Way D": [0,0],
-      "GVE Global Village Way E": [0,0],
-      "GVP Global Village Plaza": [0,0],
+      "GVP Global Village Plaza": [43.08288834599706, -77.68086207733838],
       "GWH Grace Watson Hall": [43.08366074828328, -77.66912721850348],
       "HAC Hale-Andrews Student Life Center": [43.08455245869932, -77.67222248855687],
       "HLC Hugh L. Carey Hall": [43.08272602758297, -77.67885114501152],
-      "ICC RIT Inn & Conference Center": [0,0],
-      "Infinity Quad": [0,0],
+      "Infinity Quad": [43.084249174069036, -77.67700562037771],
       "INS Institute Hall": [43.08542499145876, -77.6791176728135],
-      "JEF 175 Jefferson Road": [0,0],
       "KGH Kate Gleason Hall": [43.08435368710708, -77.66809233696328],
-      "LAC Laboratory for Applied Computing": [0,0],
+      "LAC Laboratory for Applied Computing": [43.084334126928255, -77.68092533237385],
       "LBJ Lyndon Baines Johnson Hall": [43.08739963372037, -77.66835821661624],
       "LBR Liberal Arts Hall": [43.08442965799544, -77.67640699646026],
-      "LEL Leenhouts Lodge at the Tait Preserve": [0,0],
-      "LH Liberty Hill": [0,0],
-      "LOB Joseph M. Lobozzo Alumni House": [0,0],
+      "LOB Joseph M. Lobozzo Alumni House": [43.08272494224085, -77.685882019135],
       "LOW Max Lowenthal Hall": [43.08297728935863, -77.67726424176936],
       "MEH Mark Ellingson Hall": [43.08627831786393, -77.66797130584808],
       "MON Monroe Hall": [43.0839988490521, -77.67516010847032],
-      "MPT Music Performance Theater": [0,0],
+      "MPT Music Performance Theater": [43.08554043287966, -77.68008571266114],
       "MSS MAGIC Spell Studios": [43.085677740281525, -77.67635941153638],
-      "OBS Observatory House": [0,0],
       "ORN Orange Hall": [43.08364669299646, -77.67882279549772],
       "PGA Perkins Green Apartments": [43.08580024957757, -77.66033842093185],
       "POL Gene Polisseni Center": [43.08269908992204, -77.67464244362714],
-      "PPD 100 Park Point Drive": [0,0],
+      "PPD 100 Park Point Drive": [43.091981812052055, -77.65562034183539],
       "PTH Peter Peterson Hall": [43.08601041501198, -77.66855244166551],
       "RED Red Barn": [43.084373186017984, -77.68473958570127],
       "RHA Residence Hall A": [43.08423479373873, -77.66979005180497],
@@ -1108,10 +1078,11 @@
       "RHC Residence Hall C": [43.08517221242193, -77.66946288690295],
       "RHD Residence Hall D": [43.085831934990026, -77.66899803126843],
       "RIA Frank Ritter Ice Arena": [43.0852832885352, -77.67392231845965],
-      "RKA Riverknoll Apartments": [0,0],
+      "RKA Riverknoll Apartments": [43.08236048510419, -77.68403475317069], // just one group
       "ROS Lewis P. Ross Hall": [43.082487202046394, -77.6779081223646],
       "RSC Rosica Hall": [43.08601663413455, -77.66942586272694],
-      "SAN Sands Family Studios": [0,0],
+      "SAN Sands Family Studios": [43.085362372073696, -77.67776241761453],
+      "Sentinel Courtyard": [43.084440367412675, -77.6745940208753],
       "SAU Student Alumni Union": [43.08400564674267, -77.67435277351996],
       "SHD Student Hall for Exploration and Development": [43.08398003795007, -77.67579961614729],
       "SHH Sol Heumann Hall": [43.085489941165434, -77.66715379660876],
@@ -1119,14 +1090,12 @@
       "SLA Louise Slaughter Hall": [43.08493457803417, -77.68220530079356],
       "SMT Schmitt Interfaith Center": [43.08405473580076, -77.6734886794579],
       "SUS Sustainability Institute Hall": [43.085372417437384, -77.68128119297896],
-      "TPD 125 Tech Park Drive": [0,0],
-      "UCS University Commons Suites": [0,0],
-      "UNI University Gallery": [0,0],
+      "UNI University Gallery": [43.08522638143901, -77.67752642033395],
+      "Unity Quad": [43.08524981149665, -77.67843427332093],
       "USC University Services Center": [43.08336412896962, -77.68009369156634],
       "VIG Vignelli Center for Design Studies": [43.085294002269634, -77.6777412534232],
-      "VRB Vehicle Repair Building": [0,0],
       "WAL Wallace Library": [43.083952905560295, -77.67635899714702],
-      "WEL Welcome Center": [0,0],
+      "WEL Welcome Center": [43.086011072852095, -77.67450421759057],
     }
 
     const foods = ["Candy", "Snacks", "Pizza", "Desserts"]
@@ -1495,7 +1464,7 @@
 
     window.todos = []
 
-    console.log("Events/todos:", window.todos)
+    //console.log("Events/todos:", window.todos)
 
     // Begin map code
 
@@ -1513,7 +1482,7 @@
     });
 
     function CenterMap(long, lat) {
-      console.log("Long: " + long + " Lat: " + lat);
+      //console.log("Long: " + long + " Lat: " + lat);
       map.getView().setCenter(ol.proj.transform([long, lat], 'EPSG:4326', 'EPSG:3857'));
       map.getView().setZoom(15);
     }
@@ -1686,7 +1655,7 @@
         if(feature.event){
           showEvent(feature.event.track)
         }
-        console.log("feature event clicked", feature.event)
+        //console.log("feature event clicked", feature.event)
       });
     });
 
@@ -2034,7 +2003,7 @@
       var count = 0;
 
       window.todos.forEach(todo => {
-        console.log("Todo:", todo)
+        //console.log("Todo:", todo)
         trackToCount[todo.track] = count
 
         // display
@@ -2173,7 +2142,7 @@
 
         if(timeLeft < 60000){ // remove the todo due to time out 60000
           //console.log("Cutting")
-          console.log("Todos:", window.todos)
+          //console.log("Todos:", window.todos)
           addToUserUpvotes(window.todos[count].user_submitted, window.todos[count].upvotes)
           window.todos.splice(count, 1)
           updateTodos()
@@ -2328,7 +2297,7 @@
         var inside = document.querySelector("#confirmBody")
         inside.innerHTML = null
 
-        console.log("inside", inside)
+        //console.log("inside", inside)
 
         var text = document.createElement("paragraph")
 
@@ -2382,7 +2351,7 @@
           }
 
           inside.setAttribute("class", "m-4 text-left")
-          console.log("inside", inside)
+          //console.log("inside", inside)
           inside.appendChild(text)
         }
 
@@ -2419,8 +2388,8 @@
       if (locationVal !== "Location" && locationVal !== null && event.value !== "Event Type" && event.value !== null && (!specOptions || specOptions[0] !== -1) && (getUserCoolDown() - 60000 <= time) ) {
         var error = document.querySelector("#formError")
         error.classList.add("hidden")
-        console.log(event.value)
-        console.log(locationVal)
+        //console.log(event.value)
+        //console.log(locationVal)
         var description = event.value + " at " + locationVal
         var randTrack = Math.round(Math.random() * 100000000000000000)
         //console.log(randTrack)
