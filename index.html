@@ -356,7 +356,7 @@
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
-    import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
+    import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
     import { getDatabase, ref, child, set, onValue } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js'
 
     var userId = 0;
@@ -384,6 +384,8 @@
       });
     
       const auth = getAuth(firebaseApp);
+
+      await setPersistence(auth, browserLocalPersistence);
 
       async function startUpWithCurrent(){
         const user = await auth.currentUser;
@@ -418,6 +420,8 @@
       function getFirebaseTodos (){
         const database = getDatabase(firebaseApp);
         const firebaseTodos = ref(database, 'todos');
+        console.log(database)
+        console.log(firebaseTodos)
         onValue(firebaseTodos, (snapshot) => {
           if(snapshot.val() !== null){
             const newTodos = snapshot.val();
@@ -889,7 +893,7 @@
         var loginButton = document.querySelector("#loginButton")
         var avatar = document.querySelector("#avatar")
 
-        if (user) {
+        if(user) {
           runStartUp(user)
         } else {
           ui.start('#firebaseuiAuthContainer', uiConfig);
