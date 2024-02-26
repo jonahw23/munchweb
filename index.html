@@ -24,6 +24,9 @@
     .confirmbutton:hover {
       background-color: rgb(251 146 60);
     }
+    .badgecertified{
+      filter:   brightness(99%) contrast(86%) saturate(165%);
+    }
     .badgeupvote10{
       filter:  brightness(72%) contrast(126%) hue-rotate(341deg) saturate(121%) sepia(31%);
     }
@@ -175,7 +178,7 @@
             <ul class="hidden py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
             </ul>
             <div class="py-1">
-              <button id="userPageButton" class="block text-left w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">About me</button>
+              <button id="userPageButton" class="block text-left w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</button>
               <button id="signOutButton" class="block text-left w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</button>
             </div>
         </div>
@@ -202,6 +205,10 @@
         </div>
 
         <div class="badgeblock flex flex-row flex-wrap justify-around">
+          <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
+            <img id="badgecertified" class="" src="https://i.imgur.com/3z6yT7l.png" referrerpolicy="no-referrer" alt="Badge">
+            <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Certified Munch</b>Report your first food event!</div>
+          </div>
           <div class="w-5/12 md:w-1/4 md:m-2 lg:w-1/6">
             <img id="badgeupvote10" class="" src="https://i.imgur.com/k13ZTWR.png" referrerpolicy="no-referrer" alt="Badge">
             <div class="h-20 text-grey-800 text-md flex flex-col text-center mb-2"><b>Noted</b>Receive 10 upvotes!</div>
@@ -294,7 +301,7 @@
             <div class="ms-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Location Details</div>  
             <div class="ms-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 flex flex-wrap">
                 <input id="locationInput" placeholder=" Location" maxlength="50" class="hidden bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto ml-1 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
-                <input id="roomNumInput" placeholder=" Room Number" max="999999999999999" type="number" min="0" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto ml-1 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                <input id="roomNumInput" placeholder=" Room / Number" maxlength="50" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto ml-1 p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
               </div>
               <div class="flex items-center mb-4">
                   <input id="outsideLocation" type="checkbox" value="" class="w-4 h-4 ml-2 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -791,6 +798,9 @@
                 currentUser.userbadges["badgetrend100"] = true
               }
             }
+            if(getUserPosts() >= 1){
+              currentUser.userbadges["badgecertified"] = true
+            }
             if(getUserVotesGiven() >= 10){
               currentUser.userbadges["badgegive10"] = true
             }
@@ -812,7 +822,7 @@
           }
 
           getAllBadges = function(){
-            return ["badgeupvote10", "badgeupvote100", "badgeupvote1000", "badgetrend5", "badgetrend10", "badgetrend100", "badgegive10", "badgegive100", "badgegive500"] // should be list of all badges (corresponding styles and ID for img)
+            return ["badgecertified","badgeupvote10", "badgeupvote100", "badgeupvote1000", "badgetrend5", "badgetrend10", "badgetrend100", "badgegive10", "badgegive100", "badgegive500"] // should be list of all badges (corresponding styles and ID for img)
           }
 
           var userNameInput = document.querySelector("#userNameInput")
@@ -953,6 +963,7 @@
     "FHB Helen Fish Hall B",
     "FHC Helen Fish Hall C",
     "FMS Facilities Management Services",
+    "Fountain Park",
     "GAN Frank E. Gannett Hall",
     "GHA Greek House A - Zeta Tau Alpha",
     "GHB Greek House B - Delta Phi Epsilon",
@@ -998,6 +1009,7 @@
     "RSC Rosica Hall",
     "SAN Sands Family Studios",
     "SAU Student Alumni Union",
+    "Sentinel Courtyard",
     "SHD Student Hall for Exploration and Development",
     "SHH Sol Heumann Hall",
     "SIH Student Innovation Hall",
@@ -1005,6 +1017,7 @@
     "SMT Schmitt Interfaith Center",
     "SUS Sustainability Institute Hall",
     "UNI University Gallery",
+    "Unity Quad",
     "USC University Services Center",
     "VIG Vignelli Center for Design Studies",
     "WAL Wallace Library",
@@ -2135,7 +2148,7 @@
         }
 
         text.innerHTML += "Location: "
-        text.innerHTML += todo.outside ? todo.location + " (Outside)": todo.location + ( todo.room ? ", Room " + todo.room : "")
+        text.innerHTML += todo.outside ? todo.location + " (Outside)": todo.location + ( todo.room ? ", Room: " + todo.room : "")
 
         const d = new Date();
         var time = d.getTime();
@@ -2312,7 +2325,7 @@
 
           var boldPiece = document.createElement("span")
           boldPiece.style = 'font-weight: bold'
-          var nameText = todo.name + (todo.outside ? " (Outside)" : (todo.room ? ", Room " + todo.room : "") )
+          var nameText = todo.name + (todo.outside ? " (Outside)" : (todo.room ? ", Room: " + todo.room : "") )
           var lastSpaceIndex = nameText.lastIndexOf(' ');
           if (lastSpaceIndex !== -1) { // Check if there's at least two words
             nameText = nameText.substring(0, lastSpaceIndex) + '&nbsp;' + nameText.substring(lastSpaceIndex + 1);
